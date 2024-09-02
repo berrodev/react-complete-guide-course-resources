@@ -7,11 +7,12 @@ import DeleteConfirmation from './components/DeleteConfirmation.jsx';
 import logoImg from './assets/logo.png';
 import { sortPlacesByDistance } from './loc.js';
 
+const storedPlaces =
+  JSON.parse(localStorage.getItem('pickedPlaces')).map((id) =>
+    AVAILABLE_PLACES.find((place) => place.id === id)
+  ) || [];
+
 function App() {
-  const storedPlaces =
-    JSON.parse(localStorage.getItem('pickedPlaces')).map((id) =>
-      AVAILABLE_PLACES.find((place) => place.id === id)
-    ) || [];
   const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
