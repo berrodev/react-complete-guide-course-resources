@@ -8,18 +8,15 @@ import logoImg from './assets/logo.png';
 import { sortPlacesByDistance } from './loc.js';
 
 function App() {
+  const storedPlaces =
+    JSON.parse(localStorage.getItem('pickedPlaces')).map((id) =>
+      AVAILABLE_PLACES.find((place) => place.id === id)
+    ) || [];
   const modal = useRef();
   const selectedPlace = useRef();
-  const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
   const [availablePlaces, setAvailablePlaces] = useState([]);
 
-  useEffect(() => {
-    const storedPlaces =
-      JSON.parse(localStorage.getItem('pickedPlaces')).map((id) =>
-        AVAILABLE_PLACES.find((place) => place.id === id)
-      ) || [];
-    setPickedPlaces(storedPlaces);
-  }, []);
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position) => {
       const sortedPlaces = sortPlacesByDistance(
